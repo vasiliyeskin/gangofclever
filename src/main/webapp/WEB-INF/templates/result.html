@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en,ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Uploaded words</title>
+</head>
+<body>
+<h4><a href="">Upload dictionary</a></h4>
+<h3>Uploaded users</h3>
+<table border="1" cellpadding="8" cellspacing="0" content="charset=UTF-8">
+    <thead>
+    <tr>
+        <th>Words Слова</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="word : ${words}">
+        <td th:text="${word}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
