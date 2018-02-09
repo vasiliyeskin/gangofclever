@@ -43,18 +43,26 @@ public class RootServlet extends HttpServlet {
             if (filePart.getSize() == 0) {
                 throw new IllegalStateException("Upload file have not been selected");
             }
+
+            StringBuilder template = new StringBuilder("^[");
+            for (Map.Entry<String,Integer> e: LetterSets.orangeSet.entrySet()) {
+                template.append(e.getKey());
+            }
+            template.append("]+?$");
+            Pattern p = Pattern.compile(template.toString());
+
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(filePart.getInputStream(), "UTF-8"))) {
-                List<String> words = new ArrayList<String>();
+                List<String> chosenString = new ArrayList<String>();
                 String line = "";
                 while ((line = reader.readLine()) != null)
                 {
-                    words.add(line);
+                    for (String word :  line.split(" "))
+                        if(p.matcher(word).matches())
+                            chosenString.add(word);
                 }
-                words.add("sdfsd");words.add("sfsdf");
-
-                List<String> chosenString = choseWords(words, LetterSets.orangeSet);
 
                 webContext.setVariable("words", chosenString);
+                webContext.setVariable("set", LetterSets.orangeSet);
                 engine.process("result", webContext, resp.getWriter());
             }
         } catch (Exception e) {
@@ -63,21 +71,21 @@ public class RootServlet extends HttpServlet {
         }
     }
 
-    private List<String> choseWords(List<String> words, Map<String, Integer> set) {
-        List<String> chosenString = new ArrayList<>();
-
-        StringBuilder template = new StringBuilder("^[");
-        for (Map.Entry<String,Integer> e: set.entrySet()) {
-            template.append(e.getKey());
-        }
-        template.append("]+?$");
-
-        Pattern p = Pattern.compile(template.toString());
-        for (String s: words) {
-            if(p.matcher(s).matches())
-                chosenString.add(s);
-        }
-
-        return chosenString;
-    }
+//    private List<String> choseWords(List<String> words, Map<String, Integer> set) {
+//        List<String> chosenString = new ArrayList<>();
+//
+//        StringBuilder template = new StringBuilder("^[");
+//        for (Map.Entry<String,Integer> e: set.entrySet()) {
+//            template.append(e.getKey());
+//        }
+//        template.append("]+?$");
+//
+//        Pattern p = Pattern.compile(template.toString());
+//        for (String s: words) {
+//            if(p.matcher(s).matches())
+//                chosenString.add(s);
+//        }
+//
+//        return chosenString;
+//    }
 }
