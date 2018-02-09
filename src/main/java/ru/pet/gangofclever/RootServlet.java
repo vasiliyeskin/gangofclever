@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.swing.text.html.parser.Entity;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 import static ru.pet.gangofclever.ThymeleafListener.engine;
 
@@ -48,12 +51,33 @@ public class RootServlet extends HttpServlet {
                     words.add(line);
                 }
                 words.add("sdfsd");words.add("sfsdf");
-                webContext.setVariable("words", words);
+
+                List<String> chosenString = choseWords(words, LetterSets.orangeSet);
+
+                webContext.setVariable("words", chosenString);
                 engine.process("result", webContext, resp.getWriter());
             }
         } catch (Exception e) {
             webContext.setVariable("exception", e);
             engine.process("exception", webContext, resp.getWriter());
         }
+    }
+
+    private List<String> choseWords(List<String> words, Map<String, Integer> set) {
+        List<String> chosenString = new ArrayList<>();
+
+        StringBuilder template = new StringBuilder("^[");
+        for (Map.Entry<String,Integer> e: set.entrySet()) {
+            template.append(e.getKey());
+        }
+        template.append("]+?$");
+
+        Pattern p = Pattern.compile(template.toString());
+        for (String s: words) {
+            if(p.matcher(s).matches())
+                chosenString.add(s);
+        }
+
+        return chosenString;
     }
 }
