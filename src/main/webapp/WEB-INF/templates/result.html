@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
 
     <!-- Custom styles for this template -->
     <link href="jumbotron-narrow.css" rel="stylesheet">
@@ -25,6 +26,30 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css" class="init">
+
+    </style>
+    <script type="text/javascript" src="/media/js/site.js?_=a25d93b0b2ef7712783f57407f987734">
+    </script>
+    <script type="text/javascript" src="/media/js/dynamic.php?comments-page=examples%2Fstyling%2Fbootstrap.html" async>
+    </script>
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.12.4.js">
+    </script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js">
+    </script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js">
+    </script>
+    <script type="text/javascript" language="javascript" src="../resources/demo.js">
+    </script>
+    <script type="text/javascript" class="init">
+
+        $(document).ready(function() {
+            $('#datatable').DataTable();
+        } );
+
+    </script>
+
+
 </head>
 <body>
 
@@ -44,7 +69,10 @@
         <h4><a href="">Upload dictionary</a></h4>
         <h3>Selected word by template</h3>
         <a th:text="${set}"></a>
-        <table class="table">
+        <br/>
+        <br/>
+        <br/>
+        <table class="table table-striped display"  id="datatable">
             <thead  class="thead-dark">
             <tr>
                 <th scope="col">Words</th>
